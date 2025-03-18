@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Header from "@/components/header";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -37,12 +37,10 @@ export default function ProjectForm({ onSubmit }: ProjectFormProps) {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit();
-  };
 
-  useEffect(() => {
+    // Run Gemini API call
     const runGemini = async () => {
       if (!process.env.NEXT_PUBLIC_API_KEY) {
         console.error("API_KEY is not set");
@@ -88,16 +86,9 @@ Generate a structured business and marketing plan in JSON format:
       }
     };
 
-    runGemini();
-  }, [
-    businessType,
-    selectedIndustry,
-    goals,
-    budget,
-    selectedPeriod,
-    resources,
-    valueProposition,
-  ]);
+    await runGemini(); // Execute the Gemini API call
+    onSubmit(); // Call the onSubmit prop (if needed)
+  };
 
   return (
     <div className="min-h-screen bg-[#fafafb]" dir="rtl">
