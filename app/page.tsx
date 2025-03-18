@@ -1,11 +1,10 @@
 "use client"
-
-import { useState } from "react"
 import LoadingScreen from "@/components/loading-screen"
 import ResultsScreen from "@/components/results-screen"
 import Dashboard from "@/components/dashboard"
 import TaskDetail from "@/components/task-detail"
 import ProjectForm from "@/components/project-form"
+import { useState } from 'react';
 
 export default function Home() {
   const [currentScreen, setCurrentScreen] = useState<"form" | "loading" | "results" | "dashboard" | "taskDetail">(

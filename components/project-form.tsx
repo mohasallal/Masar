@@ -1,9 +1,9 @@
 "use client";
 
 import type React from "react";
-import { useState } from "react";
-import { ChevronDown, Search } from "lucide-react";
+import { useEffect, useState } from "react";
 import Header from "@/components/header";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 interface ProjectFormProps {
   onSubmit: () => void;
@@ -17,8 +17,14 @@ export default function ProjectForm({ onSubmit }: ProjectFormProps) {
     expandCustomers: false,
     launchProduct: false,
   });
-
+  const [selectedPeriod, setSelectedPeriod] = useState("3 أشهر");
   const industries = ["سياحة", "تجارة الكترونية", "تعليم", "تكنولوجيا", "صحة"];
+
+  const [projectName, setProjectName] = useState("");
+  const [businessType, setBusinessType] = useState("");
+  const [budget, setBudget] = useState("5000 دولار");
+  const [resources, setResources] = useState("");
+  const [valueProposition, setValueProposition] = useState("");
 
   const selectIndustry = (industry: string) => {
     setSelectedIndustry(industry);
@@ -36,7 +42,62 @@ export default function ProjectForm({ onSubmit }: ProjectFormProps) {
     onSubmit();
   };
 
-  const [selectedPeriod, setSelectedPeriod] = useState("3 أشهر");
+  useEffect(() => {
+    const runGemini = async () => {
+      if (!process.env.NEXT_PUBLIC_API_KEY) {
+        console.error("API_KEY is not set");
+        return;
+      }
+
+      const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_API_KEY);
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+
+      const prompt = `
+You are an expert marketing and business strategy consultant. Based on the following user input:
+- **Business type**: ${businessType}
+- **Industry**: ${selectedIndustry}
+- **Goals**: ${JSON.stringify(goals)}
+- **Budget**: ${budget}
+- **Duration**: ${selectedPeriod}
+- **Resources**: ${resources}
+- **Value proposition**: ${valueProposition}
+
+Generate a structured business and marketing plan in JSON format:
+{
+  "businessPlan": {
+    "steps": [
+      { "step": 1, "title": "First Step", "tasks": ["Task 1", "Task 2"] },
+      ...
+    ]
+  },
+  "marketingPlan": {
+    "steps": [
+      { "step": 1, "title": "First Marketing Step", "tasks": ["Task 1", "Task 2"] },
+      ...
+    ]
+  }
+}
+`;
+
+      try {
+        const response = await model.generateContent(prompt);
+        const text = response.response.text();
+        console.log("Generated Plan:", text);
+      } catch (error) {
+        console.error("Error generating plan:", error);
+      }
+    };
+
+    runGemini();
+  }, [
+    businessType,
+    selectedIndustry,
+    goals,
+    budget,
+    selectedPeriod,
+    resources,
+    valueProposition,
+  ]);
 
   return (
     <div className="min-h-screen bg-[#fafafb]" dir="rtl">
@@ -65,6 +126,7 @@ export default function ProjectForm({ onSubmit }: ProjectFormProps) {
             <input
               type="text"
               id="projectName"
+              onChange={(e) => setProjectName(e.target.value)}
               placeholder="متجر الكتروني لبيع الملابس الرياضية"
               className="w-full rounded-md border border-[#e2e4e7] bg-white p-3 text-gray-500 text-right"
             />
@@ -82,9 +144,11 @@ export default function ProjectForm({ onSubmit }: ProjectFormProps) {
               <select
                 id="projectType"
                 className="block px-2 w-full rounded-md border border-[#e2e4e7] text-gray-400 bg-white p-3 text-right"
+                value={businessType}
+                onChange={(e) => setBusinessType(e.target.value)}
               >
                 <option value="">اختر نوع المشروع</option>
-                <option value=" متجر إلكتروني">متجر إلكتروني</option>
+                <option value="متجر إلكتروني">متجر إلكتروني</option>
                 <option value="منتج رقمي">منتج رقمي</option>
                 <option value="خدمات إلكترونية">خدمات إلكترونية</option>
                 <option value="خدمات تعليمية">خدمات تعليمية</option>
@@ -130,7 +194,9 @@ export default function ProjectForm({ onSubmit }: ProjectFormProps) {
                     type="checkbox"
                     id="increaseProfit"
                     checked={goals.increaseProfit}
-                    onChange={() => handleGoalChange("increaseProfit")}
+                    onChange={() => {
+                      handleGoalChange("increaseProfit");
+                    }}
                     className="h-5 w-5 rounded border-[#dce0ff] text-[#2a3ffa]"
                   />
                   <label htmlFor="increaseProfit" className="text-[#202227]">
@@ -191,7 +257,8 @@ export default function ProjectForm({ onSubmit }: ProjectFormProps) {
             <input
               type="text"
               id="budget"
-              defaultValue="5000 دولار"
+              value={budget}
+              onChange={(e) => setBudget(e.target.value)}
               className="w-full rounded-md border text-gray-400 border-[#e2e4e7] bg-white p-3 text-right"
             />
           </div>
@@ -233,6 +300,8 @@ export default function ProjectForm({ onSubmit }: ProjectFormProps) {
             <textarea
               id="resources"
               placeholder="مثال: 3 موظفين بدوام جزئي ، أدوات تصميم ..."
+              value={resources}
+              onChange={(e) => setResources(e.target.value)}
               className="w-full rounded-md border border-[#e2e4e7] text-gray-600 bg-white p-3 min-h-36 max-h-36 text-right h-32"
             />
           </div>
@@ -247,6 +316,8 @@ export default function ProjectForm({ onSubmit }: ProjectFormProps) {
             </label>
             <textarea
               id="valueProposition"
+              value={valueProposition}
+              onChange={(e) => setValueProposition(e.target.value)}
               className="w-full rounded-md border border-[#e2e4e7] bg-white p-3 text-gray-500 min-h-36 max-h-36 text-right h-32"
             />
           </div>
