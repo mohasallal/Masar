@@ -51,31 +51,31 @@ export default function ProjectForm({ onSubmit }: ProjectFormProps) {
       const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
       const prompt = `
-You are an expert marketing and business strategy consultant. Based on the following user input:
-- **Business type**: ${businessType}
-- **Industry**: ${selectedIndustry}
-- **Goals**: ${JSON.stringify(goals)}
-- **Budget**: ${budget}
-- **Duration**: ${selectedPeriod}
-- **Resources**: ${resources}
-- **Value proposition**: ${valueProposition}
-
-Generate a structured business and marketing plan in JSON format:
-{
-  "businessPlan": {
-    "steps": [
-      { "step": 1, "title": "First Step", "tasks": ["Task 1", "Task 2"] },
-      ...
-    ]
-  },
-  "marketingPlan": {
-    "steps": [
-      { "step": 1, "title": "First Marketing Step", "tasks": ["Task 1", "Task 2"] },
-      ...
-    ]
-  }
-}
-`;
+      أنت مستشار خبير في التسويق واستراتيجيات الأعمال. بناءً على المدخلات التالية من المستخدم:
+      - **نوع العمل**: ${businessType}
+      - **الصناعة**: ${selectedIndustry}
+      - **الأهداف**: ${JSON.stringify(goals)}
+      - **الميزانية**: ${budget}
+      - **المدة الزمنية**: ${selectedPeriod}
+      - **الموارد المتاحة**: ${resources}
+      - **القيمة المقترحة/المشكلة التي يحلها المشروع**: ${valueProposition}
+      
+      قم بإنشاء خطة عمل وتسويق منظمة بتنسيق JSON:
+      {
+        "businessPlan": {
+          "steps": [
+            { "step": 1, "title": "الخطوة الأولى", "tasks": ["المهمة 1", "المهمة 2"] },
+            ...
+          ]
+        },
+        "marketingPlan": {
+          "steps": [
+            { "step": 1, "title": "الخطوة التسويقية الأولى", "tasks": ["المهمة 1", "المهمة 2"] },
+            ...
+          ]
+        }
+      }
+      `;
 
       try {
         const response = await model.generateContent(prompt);
