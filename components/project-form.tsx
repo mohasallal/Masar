@@ -1,52 +1,42 @@
-"use client"
+"use client";
 
-import type React from "react"
-
-import { useState } from "react"
-import { ChevronDown, Search } from "lucide-react"
-import Header from "@/components/header"
+import type React from "react";
+import { useState } from "react";
+import { ChevronDown, Search } from "lucide-react";
+import Header from "@/components/header";
 
 interface ProjectFormProps {
-  onSubmit: () => void
+  onSubmit: () => void;
 }
 
 export default function ProjectForm({ onSubmit }: ProjectFormProps) {
-  const [isIndustryDropdownOpen, setIsIndustryDropdownOpen] = useState(false)
-  const [isImplementationDropdownOpen, setIsImplementationDropdownOpen] = useState(false)
-  const [selectedIndustry, setSelectedIndustry] = useState("تكنولوجيا")
+  const [selectedIndustry, setSelectedIndustry] = useState("تكنولوجيا");
   const [goals, setGoals] = useState({
     increaseProfit: false,
     improveMarketing: false,
     expandCustomers: false,
     launchProduct: false,
-  })
+  });
 
-  const industries = ["سياحة", "تجارة الكترونية", "تعليم", "تكنولوجيا", "صحة"]
-
-  const toggleIndustryDropdown = () => {
-    setIsIndustryDropdownOpen(!isIndustryDropdownOpen)
-  }
-
-  const toggleImplementationDropdown = () => {
-    setIsImplementationDropdownOpen(!isImplementationDropdownOpen)
-  }
+  const industries = ["سياحة", "تجارة الكترونية", "تعليم", "تكنولوجيا", "صحة"];
 
   const selectIndustry = (industry: string) => {
-    setSelectedIndustry(industry)
-    setIsIndustryDropdownOpen(false)
-  }
+    setSelectedIndustry(industry);
+  };
 
   const handleGoalChange = (goal: keyof typeof goals) => {
-    setGoals({
-      ...goals,
-      [goal]: !goals[goal],
-    })
-  }
+    setGoals((prevGoals) => ({
+      ...prevGoals,
+      [goal]: !prevGoals[goal],
+    }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onSubmit()
-  }
+    e.preventDefault();
+    onSubmit();
+  };
+
+  const [selectedPeriod, setSelectedPeriod] = useState("3 أشهر");
 
   return (
     <div className="min-h-screen bg-[#fafafb]" dir="rtl">
@@ -55,188 +45,209 @@ export default function ProjectForm({ onSubmit }: ProjectFormProps) {
       {/* Main Content */}
       <main className="mx-auto max-w-xl px-6 py-8">
         <div className="mb-10 text-center">
-          <h1 className="mb-4 text-3xl font-bold text-[#0a2540]">ابدأ بتصميم خطة مشروعك</h1>
-          <p className="text-lg text-[#8696ab]">املأ التفاصيل التالية لتحصل على خطة عمل متكاملة تناسب فكرتك</p>
+          <h1 className="mb-4 text-4xl font-bold text-[#0a2540]">
+            ابدأ بتصميم خطة مشروعك
+          </h1>
+          <p className="text-xl text-[#8696ab]">
+            املأ التفاصيل التالية لتحصل على خطة عمل متكاملة تناسب فكرتك
+          </p>
         </div>
 
         <form className="space-y-8" onSubmit={handleSubmit}>
           {/* Project Name */}
           <div className="space-y-2">
-            <label htmlFor="projectName" className="block text-xl text-[#6f757f] text-right">
+            <label
+              htmlFor="projectName"
+              className="block text-xl text-[#6f757f] text-right"
+            >
               اسم المشروع
             </label>
             <input
               type="text"
               id="projectName"
-              defaultValue="متجر الكتروني لبيع الملابس الرياضية"
-              className="w-full rounded-md border border-[#e2e4e7] bg-white p-3 text-right"
+              placeholder="متجر الكتروني لبيع الملابس الرياضية"
+              className="w-full rounded-md border border-[#e2e4e7] bg-white p-3 text-gray-500 text-right"
             />
           </div>
 
           {/* Project Type */}
           <div className="space-y-2">
-            <label htmlFor="projectType" className="block text-xl text-[#6f757f] text-right">
+            <label
+              htmlFor="projectType"
+              className="block text-xl text-[#6f757f] text-right"
+            >
               نوع المشروع
             </label>
             <div className="relative">
-              <div className="flex cursor-pointer items-center justify-between rounded-md border border-[#e2e4e7] bg-white p-3">
-                <ChevronDown className="h-5 w-5 text-[#6f757f]" />
-                <span>متجر</span>
-              </div>
+              <select
+                id="projectType"
+                className="block px-2 w-full rounded-md border border-[#e2e4e7] text-gray-400 bg-white p-3 text-right"
+              >
+                <option value="">اختر نوع المشروع</option>
+                <option value=" متجر إلكتروني">متجر إلكتروني</option>
+                <option value="منتج رقمي">منتج رقمي</option>
+                <option value="خدمات إلكترونية">خدمات إلكترونية</option>
+                <option value="خدمات تعليمية">خدمات تعليمية</option>
+                <option value="مشروع إبداعي">مشروع إبداعي</option>
+                <option value="منصة تقنية">منصة تقنية</option>
+                <option value="مشروع تجاري"> مشروع تجاري</option>
+              </select>
             </div>
           </div>
 
-          {/* Industry */}
           <div className="space-y-2">
-            <label htmlFor="industry" className="block text-xl text-[#6f757f] text-right">
+            <label
+              htmlFor="industry"
+              className="block text-xl text-[#6f757f] text-right"
+            >
               الصناعة
             </label>
             <div className="relative">
-              <div
-                className="flex cursor-pointer items-center justify-between rounded-md border border-[#e2e4e7] bg-white p-3"
-                onClick={toggleIndustryDropdown}
+              <select
+                id="industry"
+                className="block w-full rounded-md border text-gray-400 border-[#e2e4e7] bg-white p-3 text-right"
+                value={selectedIndustry}
+                onChange={(e) => selectIndustry(e.target.value)}
               >
-                <ChevronDown className="h-5 w-5 text-[#6f757f]" />
-                <div className="flex items-center">
-                  <span>{selectedIndustry}</span>
-                  <Search className="mr-2 h-5 w-5 text-[#6f757f]" />
-                </div>
-              </div>
-
-              {isIndustryDropdownOpen && (
-                <div className="absolute z-10 mt-1 w-full rounded-md border border-[#e2e4e7] bg-white shadow-lg">
-                  {industries.map((industry) => (
-                    <div
-                      key={industry}
-                      className="cursor-pointer p-3 text-right hover:bg-[#f7f8f9]"
-                      onClick={() => selectIndustry(industry)}
-                    >
-                      {industry}
-                    </div>
-                  ))}
-                </div>
-              )}
+                {industries.map((industry) => (
+                  <option key={industry} value={industry}>
+                    {industry}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
           {/* Goals */}
           <div className="space-y-4">
-            <label className="block text-xl text-[#6f757f] text-right">الأهداف</label>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center justify-end space-x-2 space-x-reverse">
-                <label htmlFor="increaseProfit" className="text-[#202227]">
-                  زيادة الأرباح
-                </label>
-                <input
-                  type="checkbox"
-                  id="increaseProfit"
-                  checked={goals.increaseProfit}
-                  onChange={() => handleGoalChange("increaseProfit")}
-                  className="h-5 w-5 rounded border-[#dce0ff] text-[#2a3ffa]"
-                />
+            <label className="block text-xl text-[#6f757f] text-right">
+              الأهداف
+            </label>
+            <div className="flex flex-col  gap-4 ml-30">
+              <div className="flex items-center justify-evenly gap-10">
+                <div className="flex items-center justify-end gap-2">
+                  <input
+                    type="checkbox"
+                    id="increaseProfit"
+                    checked={goals.increaseProfit}
+                    onChange={() => handleGoalChange("increaseProfit")}
+                    className="h-5 w-5 rounded border-[#dce0ff] text-[#2a3ffa]"
+                  />
+                  <label htmlFor="increaseProfit" className="text-[#202227]">
+                    زيادة الأرباح
+                  </label>
+                </div>
+                <div className="flex items-center justify-end gap-2 ">
+                  <input
+                    type="checkbox"
+                    id="improveMarketing"
+                    checked={goals.improveMarketing}
+                    onChange={() => handleGoalChange("improveMarketing")}
+                    className="h-5 w-5 rounded border-[#dce0ff] text-[#2a3ffa]"
+                  />
+                  <label htmlFor="improveMarketing" className="text-[#202227]">
+                    تحسين التسويق
+                  </label>
+                </div>
               </div>
-              <div className="flex items-center justify-end space-x-2 space-x-reverse">
-                <label htmlFor="improveMarketing" className="text-[#202227]">
-                  تحسين التسويق
-                </label>
-                <input
-                  type="checkbox"
-                  id="improveMarketing"
-                  checked={goals.improveMarketing}
-                  onChange={() => handleGoalChange("improveMarketing")}
-                  className="h-5 w-5 rounded border-[#dce0ff] text-[#2a3ffa]"
-                />
-              </div>
-              <div className="flex items-center justify-end space-x-2 space-x-reverse">
-                <label htmlFor="expandCustomers" className="text-[#202227]">
-                  توسيع قاعدة العملاء
-                </label>
-                <input
-                  type="checkbox"
-                  id="expandCustomers"
-                  checked={goals.expandCustomers}
-                  onChange={() => handleGoalChange("expandCustomers")}
-                  className="h-5 w-5 rounded border-[#dce0ff] text-[#2a3ffa]"
-                />
-              </div>
-              <div className="flex items-center justify-end space-x-2 space-x-reverse">
-                <label htmlFor="launchProduct" className="text-[#202227]">
-                  إطلاق منتج جديد
-                </label>
-                <input
-                  type="checkbox"
-                  id="launchProduct"
-                  checked={goals.launchProduct}
-                  onChange={() => handleGoalChange("launchProduct")}
-                  className="h-5 w-5 rounded border-[#dce0ff] text-[#2a3ffa]"
-                />
+              <div className="flex items-center justify-evenly gap-2">
+                {" "}
+                <div className="flex items-center justify-end gap-2 mr-1">
+                  <input
+                    type="checkbox"
+                    id="expandCustomers"
+                    checked={goals.expandCustomers}
+                    onChange={() => handleGoalChange("expandCustomers")}
+                    className="h-5 w-5 rounded border-[#dce0ff] text-[#2a3ffa]"
+                  />
+                  <label htmlFor="expandCustomers" className="text-[#202227]">
+                    توسيع قاعدة العملاء
+                  </label>
+                </div>
+                <div className="flex items-center justify-end gap-2 mr-2">
+                  <input
+                    type="checkbox"
+                    id="launchProduct"
+                    checked={goals.launchProduct}
+                    onChange={() => handleGoalChange("launchProduct")}
+                    className="h-5 w-5 rounded border-[#dce0ff] text-[#2a3ffa]"
+                  />
+                  <label htmlFor="launchProduct" className="text-[#202227]">
+                    إطلاق منتج جديد
+                  </label>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Budget */}
           <div className="space-y-2">
-            <label htmlFor="budget" className="block text-xl text-[#6f757f] text-right">
+            <label
+              htmlFor="budget"
+              className="block text-xl text-[#6f757f] text-right"
+            >
               الميزانية المتاحة
             </label>
             <input
               type="text"
               id="budget"
               defaultValue="5000 دولار"
-              className="w-full rounded-md border border-[#e2e4e7] bg-white p-3 text-right"
+              className="w-full rounded-md border text-gray-400 border-[#e2e4e7] bg-white p-3 text-right"
             />
           </div>
 
           {/* Implementation Period */}
           <div className="space-y-2">
-            <label htmlFor="implementationPeriod" className="block text-xl text-[#6f757f] text-right">
+            <label
+              htmlFor="implementationPeriod"
+              className="block text-xl text-[#6f757f] text-right"
+            >
               مدة التنفيذ
             </label>
             <div className="relative">
-              <div
-                className="flex cursor-pointer items-center justify-between rounded-md border border-[#e2e4e7] bg-white p-3"
-                onClick={toggleImplementationDropdown}
+              <select
+                id="implementationPeriod"
+                className="block w-full rounded-md border text-gray-400 border-[#e2e4e7] bg-white p-3 text-right"
+                value={selectedPeriod}
+                onChange={(e) => setSelectedPeriod(e.target.value)}
               >
-                <ChevronDown className="h-5 w-5 text-[#6f757f]" />
-                <span>3 أشهر</span>
-              </div>
-
-              {isImplementationDropdownOpen && (
-                <div className="absolute z-10 mt-1 w-full rounded-md border border-[#e2e4e7] bg-white shadow-lg">
-                  {["شهر واحد", "شهرين", "3 أشهر", "6 أشهر", "سنة"].map((period) => (
-                    <div
-                      key={period}
-                      className="cursor-pointer p-3 text-right hover:bg-[#f7f8f9]"
-                      onClick={() => setIsImplementationDropdownOpen(false)}
-                    >
+                {["شهر واحد", "شهرين", "3 أشهر", "6 أشهر", "سنة"].map(
+                  (period) => (
+                    <option key={period} value={period}>
                       {period}
-                    </div>
-                  ))}
-                </div>
-              )}
+                    </option>
+                  )
+                )}
+              </select>
             </div>
           </div>
 
           {/* Available Resources */}
           <div className="space-y-2">
-            <label htmlFor="resources" className="block text-xl text-[#6f757f] text-right">
+            <label
+              htmlFor="resources"
+              className="block text-xl text-[#6f757f] text-right"
+            >
               الموارد المتاحة
             </label>
             <textarea
               id="resources"
               placeholder="مثال: 3 موظفين بدوام جزئي ، أدوات تصميم ..."
-              className="w-full rounded-md border border-[#e2e4e7] bg-white p-3 text-right h-32"
+              className="w-full rounded-md border border-[#e2e4e7] text-gray-600 bg-white p-3 min-h-36 max-h-36 text-right h-32"
             />
           </div>
 
           {/* Value Proposition */}
           <div className="space-y-2">
-            <label htmlFor="valueProposition" className="block text-xl text-[#6f757f] text-right">
+            <label
+              htmlFor="valueProposition"
+              className="block text-xl text-[#6f757f] text-right"
+            >
               القيمة المقترحة/المشكلة التي يحلها المشروع
             </label>
             <textarea
               id="valueProposition"
-              className="w-full rounded-md border border-[#e2e4e7] bg-white p-3 text-right h-32"
+              className="w-full rounded-md border border-[#e2e4e7] bg-white p-3 text-gray-500 min-h-36 max-h-36 text-right h-32"
             />
           </div>
 
@@ -257,6 +268,5 @@ export default function ProjectForm({ onSubmit }: ProjectFormProps) {
         </form>
       </main>
     </div>
-  )
+  );
 }
-

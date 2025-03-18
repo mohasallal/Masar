@@ -10,48 +10,65 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ onTaskClick }: DashboardProps) {
-  const [activeTab, setActiveTab] = useState<"new" | "inProgress">("new")
+  const [activeTab, setActiveTab] = useState<"new" | "inProgress" | "archive">("new")
 
   const newTasks = [
     {
       id: 1,
       title: "إنشاء عرض تقديمي للمستثمرين",
       date: "MARCH 30, 2025",
-      image: "/placeholder.svg?height=40&width=40",
-      illustration: "/placeholder.svg?height=200&width=400",
+      image: "/sarah.png",
+      illustration: "/img-show.png",
     },
     {
       id: 2,
       title: "اقتراح نموذج تسعير",
       date: "MAY 30, 2025",
-      image: "/placeholder.svg?height=40&width=40",
-      illustration: "/placeholder.svg?height=200&width=400",
+      image: "/omar.png",
+      illustration: "/img-cash.png",
     },
     {
       id: 3,
       title: "إطلاق الحملة الإعلانية الأولى",
       date: "MAY 30, 2025",
-      image: "/placeholder.svg?height=40&width=40",
-      illustration: "/placeholder.svg?height=200&width=400",
+      image: "/montaser.png",
+      illustration: "/img-mik.png",
     },
   ]
 
   const inProgressTasks = [
     {
-      id: 4,
+      id: 1,
       title: "تصميم نموذج أولي للمنتج",
       subtitle: "إنشاء Wireframe باستخدام أدوات التصميم",
       date: "JULY 29, 2025",
-      images: ["/placeholder.svg?height=40&width=40", "/placeholder.svg?height=40&width=40"],
+      images: ["/montaser.png", "/mohammad.png"],
       progress: 70,
     },
     {
-      id: 5,
+      id: 2,
       title: "إطلاق الحملة الإعلانية الأولى",
       subtitle: "نشر أول حملة تسويقية على وسائل التواصل الاجتماعي",
       date: "JULY 29, 2025",
-      images: ["/placeholder.svg?height=40&width=40", "/placeholder.svg?height=40&width=40"],
+      images: ["/mohammad.png", "/omar.png"],
       progress: 50,
+    },
+  ]
+
+  const archivedTasks = [
+    {
+      id: 1,
+      title: "إغلاق الحملة الإعلانية الثانية",
+      date: "JANUARY 20, 2025",
+      image: "/sarah.png",
+      illustration: "/img-show.png",
+    },
+    {
+      id: 2,
+      title: "إعداد تقرير الأداء",
+      date: "FEBRUARY 15, 2025",
+      image: "/omar.png",
+      illustration: "/img-cash.png",
     },
   ]
 
@@ -62,31 +79,33 @@ export default function Dashboard({ onTaskClick }: DashboardProps) {
       {/* Main Content */}
       <main className="mx-auto max-w-xl px-6 py-8">
         {/* Tabs */}
-        <div className="mb-8 flex justify-center space-x-6 space-x-reverse">
+        <div className="mb-8 flex items-center gap-10 justify-center space-x-6 space-x-reverse">
           <button
-            className={`pb-2 text-lg font-medium ${
-              activeTab === "new" ? "border-b-2 border-[#6fc4fc] text-[#0a2540]" : "text-[#6d798e]"
-            }`}
+            className={`pb-2 text-lg font-medium ${activeTab === "new" ? "border-b-2 border-[#6fc4fc] text-[#0a2540]" : "text-[#6d798e]"}`}
             onClick={() => setActiveTab("new")}
           >
             المهام الجديدة
           </button>
           <button
-            className={`pb-2 text-lg font-medium ${
-              activeTab === "inProgress" ? "border-b-2 border-[#6fc4fc] text-[#0a2540]" : "text-[#6d798e]"
-            }`}
+            className={`pb-2 text-lg font-medium ${activeTab === "inProgress" ? "border-b-2 border-[#6fc4fc] text-[#0a2540]" : "text-[#6d798e]"}`}
             onClick={() => setActiveTab("inProgress")}
           >
             قيد التنفيذ
+          </button>
+          <button
+            className={`pb-2 text-lg font-medium ${activeTab === "archive" ? "border-b-2 border-[#6fc4fc] text-[#0a2540]" : "text-[#6d798e]"}`}
+            onClick={() => setActiveTab("archive")}
+          >
+            أرشيف
           </button>
         </div>
 
         {/* Page Title */}
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold text-[#0a2540]">
-            {activeTab === "new" ? "لوحة كايزان الخاصة بك" : "قيد التنفيذ"}
+          <h1 className="text-3xl font-bold text-[#0a2540]">
+            {activeTab === "new" ? "لوحة كانبان الخاصة بك" : activeTab === "inProgress" ? "قيد التنفيذ" : "الأرشيف"}
           </h1>
-          {activeTab === "new" && <p className="text-[#6d798e]">المهام الجديدة</p>}
+          {activeTab === "new" && <p className="text-[#6d798e] text-xl">المهام الجديدة</p>}
         </div>
 
         {/* New Tasks */}
@@ -125,7 +144,7 @@ export default function Dashboard({ onTaskClick }: DashboardProps) {
                     </div>
                   </div>
                 </div>
-                <div className="h-2 bg-[#6fc4fc]"></div>
+                <div className="h-2 bg-[#6ea5ca]"></div>
               </div>
             ))}
           </div>
@@ -136,7 +155,7 @@ export default function Dashboard({ onTaskClick }: DashboardProps) {
           <div className="space-y-10">
             {inProgressTasks.map((task) => (
               <div key={task.id} className="space-y-3 cursor-pointer" onClick={() => onTaskClick(task.id)}>
-                <h3 className="text-xl font-medium text-[#0a2540] text-center">{task.title}</h3>
+                <h3 className="text-2xl font-medium text-[#0a2540] text-center">{task.title}</h3>
                 <p className="text-center text-[#6d798e]">{task.subtitle}</p>
 
                 <div className="flex items-center justify-between mt-8">
@@ -168,8 +187,49 @@ export default function Dashboard({ onTaskClick }: DashboardProps) {
             ))}
           </div>
         )}
+
+        {/* Archived Tasks */}
+        {activeTab === "archive" && (
+          <div className="space-y-6">
+            {archivedTasks.map((task) => (
+              <div
+                key={task.id}
+                className="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm cursor-pointer transition-transform hover:scale-[1.01]"
+                onClick={() => onTaskClick(task.id)}
+              >
+                <div className="p-4">
+                  <div className="mb-4">
+                    <Image
+                      src={task.illustration || "/placeholder.svg"}
+                      alt={task.title}
+                      width={400}
+                      height={200}
+                      className="h-auto w-full rounded-lg object-cover"
+                    />
+                  </div>
+                  <h3 className="mb-4 text-center text-lg font-medium text-[#0a2540]">{task.title}</h3>
+                  <div className="flex items-center justify-between border-t border-gray-100 pt-3">
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src={task.image || "/placeholder.svg"}
+                        alt="User"
+                        width={24}
+                        height={24}
+                        className="h-8 w-8 rounded-full"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-[#6d798e]">
+                      <span>{task.date}</span>
+                      <Calendar className="h-4 w-4" />
+                    </div>
+                  </div>
+                </div>
+                <div className="h-2 bg-[#6ea5ca]"></div>
+              </div>
+            ))}
+          </div>
+        )}
       </main>
     </div>
   )
 }
-

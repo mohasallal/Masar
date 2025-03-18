@@ -33,7 +33,7 @@ export default function TaskDetail({ onBack, taskId = 1 }: TaskDetailProps) {
         {/* Task Image */}
         <div className="mb-6">
           <Image
-            src="/placeholder.svg?height=300&width=600"
+            src="/img-show.png"
             alt="Task Illustration"
             width={600}
             height={300}
@@ -57,13 +57,13 @@ export default function TaskDetail({ onBack, taskId = 1 }: TaskDetailProps) {
           {/* Responsible Person */}
           <div className="space-y-2">
             <label className="block text-lg text-[#8696ab] text-right">المسؤول عن اتمام المهمة</label>
-            <div className="rounded-md border border-[#e2e4e7] bg-white p-3 text-right">سارة ياسر</div>
+            <div className="rounded-md border border-[#e2e4e7] text-gray-600 bg-white p-3 text-right">سارة ياسر</div>
           </div>
 
           {/* Expected Delivery Date */}
           <div className="space-y-2">
             <label className="block text-lg text-[#8696ab] text-right">تاريخ التسليم المتوقع</label>
-            <div className="rounded-md border border-[#e2e4e7] bg-white p-3 text-right">March 30, 2025</div>
+            <div className="rounded-md border border-[#e2e4e7] text-gray-600 bg-white p-3 text-right">March 30, 2025</div>
           </div>
 
           {/* Completion Percentage */}
