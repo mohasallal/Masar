@@ -91,76 +91,83 @@ Generate a structured business and marketing plan in JSON format:
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafb]" dir="rtl">
-      <Header />
-
-      {/* Main Content */}
-      <main className="mx-auto max-w-xl px-6 py-8">
-        <div className="mb-10 text-center">
-          <h1 className="mb-4 text-4xl font-bold text-[#0a2540]">
-            ابدأ بتصميم خطة مشروعك
-          </h1>
-          <p className="text-xl text-[#8696ab]">
-            املأ التفاصيل التالية لتحصل على خطة عمل متكاملة تناسب فكرتك
-          </p>
-        </div>
-
-        <form className="space-y-8" onSubmit={handleSubmit}>
-          {/* Project Name */}
-          <div className="space-y-2">
-            <label
-              htmlFor="projectName"
-              className="block text-xl text-[#6f757f] text-right"
-            >
-              اسم المشروع
-            </label>
-            <input
-              type="text"
-              id="projectName"
-              onChange={(e) => setProjectName(e.target.value)}
-              placeholder="متجر الكتروني لبيع الملابس الرياضية"
-              className="w-full rounded-md border border-[#e2e4e7] bg-white p-3 text-gray-500 text-right"
-            />
+    <div className="min-h-screen flex bg-[#fafafb]" dir="rtl">
+      {/* Left Side: Logo and Background */}
+      <div className="w-1/2 bg-[#0a2540] text-white flex flex-col items-center justify-center fixed top-0 left-0 h-screen">
+  <div className="w-87">
+    <div className="relative h-120 w-120 ">
+      <img src="/MasarLogo.png" alt="logo" className="h-120 w-120" />
+    </div>
+  </div>
+</div>
+      {/* Right Side: Form */}
+      <div className="w-1/2 p-8">
+        <main className="mx-auto max-w-xl">
+          <div className="mb-10 text-center">
+            <h1 className="mb-4 text-4xl font-bold text-[#0a2540]">
+              ابدأ بتصميم خطة مشروعك
+            </h1>
+            <p className="text-xl text-[#8696ab]">
+              املأ التفاصيل التالية لتحصل على خطة عمل متكاملة تناسب فكرتك
+            </p>
           </div>
 
-          {/* Project Type */}
-          <div className="space-y-2">
-            <label
-              htmlFor="projectType"
-              className="block text-xl text-[#6f757f] text-right"
-            >
-              نوع المشروع
-            </label>
-            <div className="relative">
-              <select
-                id="projectType"
-                className="block px-2 w-full rounded-md border border-[#e2e4e7] text-gray-400 bg-white p-3 text-right"
-                value={businessType}
-                onChange={(e) => setBusinessType(e.target.value)}
+          <form className="space-y-8" onSubmit={handleSubmit}>
+            {/* Project Name */}
+            <div className="space-y-2">
+              <label
+                htmlFor="projectName"
+                className="block text-xl text-[#6f757f] font-bold text-right"
               >
-                <option value="">اختر نوع المشروع</option>
-                <option value="متجر إلكتروني">متجر إلكتروني</option>
-                <option value="منتج رقمي">منتج رقمي</option>
-                <option value="خدمات إلكترونية">خدمات إلكترونية</option>
-                <option value="خدمات تعليمية">خدمات تعليمية</option>
-                <option value="مشروع إبداعي">مشروع إبداعي</option>
-                <option value="منصة تقنية">منصة تقنية</option>
-                <option value="مشروع تجاري"> مشروع تجاري</option>
-              </select>
+                اسم المشروع
+              </label>
+              <input
+                type="text"
+                id="projectName"
+                onChange={(e) => setProjectName(e.target.value)}
+                placeholder="متجر الكتروني لبيع الملابس الرياضية"
+                className="w-full rounded-md border border-[#e2e4e7]  bg-white p-3 text-black text-right"
+              />
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <label
-              htmlFor="industry"
-              className="block text-xl text-[#6f757f] text-right"
-            >
-              الصناعة
-            </label>
-            <div className="relative">
-              <select
+            {/* Project Type */}
+            <div className="space-y-2">
+              <label
+                htmlFor="projectType"
+                className="block text-xl text-[#6f757f] font-bold text-right"
+              >
+                نوع المشروع
+              </label>
+              <div className="relative">
+                <select
+                  id="projectType"
+                  className="block px-2 w-full rounded-md border  border-[#e2e4e7] text-black bg-white p-3 text-right"
+                  value={businessType}
+                  onChange={(e) => setBusinessType(e.target.value)}
+                >
+                  <option value="">اختر نوع المشروع</option>
+                  <option value="متجر إلكتروني">متجر إلكتروني</option>
+                  <option value="منتج رقمي">منتج رقمي</option>
+                  <option value="خدمات إلكترونية">خدمات إلكترونية</option>
+                  <option value="خدمات تعليمية">خدمات تعليمية</option>
+                  <option value="مشروع إبداعي">مشروع إبداعي</option>
+                  <option value="منصة تقنية">منصة تقنية</option>
+                  <option value="مشروع تجاري"> مشروع تجاري</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="industry"
+                className="block text-xl text-[#6f757f] font-bold text-right"
+              >
+                الصناعة
+              </label>
+              <div className="relative">
+                <select
                 id="industry"
-                className="block w-full rounded-md border text-gray-400 border-[#e2e4e7] bg-white p-3 text-right"
+                className="block w-full rounded-md border text-black border-[#e2e4e7] bg-white p-3 text-right"
                 value={selectedIndustry}
                 onChange={(e) => selectIndustry(e.target.value)}
               >
@@ -175,7 +182,7 @@ Generate a structured business and marketing plan in JSON format:
 
           {/* Goals */}
           <div className="space-y-4">
-            <label className="block text-xl text-[#6f757f] text-right">
+            <label className="block text-xl font-bold text-[#6f757f] text-right">
               الأهداف
             </label>
             <div className="flex flex-col  gap-4 ml-30">
@@ -241,7 +248,7 @@ Generate a structured business and marketing plan in JSON format:
           <div className="space-y-2">
             <label
               htmlFor="budget"
-              className="block text-xl text-[#6f757f] text-right"
+              className="block text-xl font-bold text-[#6f757f] text-right"
             >
               الميزانية المتاحة
             </label>
@@ -250,7 +257,7 @@ Generate a structured business and marketing plan in JSON format:
               id="budget"
               value={budget}
               onChange={(e) => setBudget(e.target.value)}
-              className="w-full rounded-md border text-gray-400 border-[#e2e4e7] bg-white p-3 text-right"
+              className="w-full rounded-md border text-black border-[#e2e4e7] bg-white p-3 text-right"
             />
           </div>
 
@@ -258,14 +265,14 @@ Generate a structured business and marketing plan in JSON format:
           <div className="space-y-2">
             <label
               htmlFor="implementationPeriod"
-              className="block text-xl text-[#6f757f] text-right"
+              className="block font-bold text-xl text-[#6f757f] text-right"
             >
               مدة التنفيذ
             </label>
             <div className="relative">
               <select
                 id="implementationPeriod"
-                className="block w-full rounded-md border text-gray-400 border-[#e2e4e7] bg-white p-3 text-right"
+                className="block w-full rounded-md border text-black border-[#e2e4e7] bg-white p-3 text-right"
                 value={selectedPeriod}
                 onChange={(e) => setSelectedPeriod(e.target.value)}
               >
@@ -284,7 +291,7 @@ Generate a structured business and marketing plan in JSON format:
           <div className="space-y-2">
             <label
               htmlFor="resources"
-              className="block text-xl text-[#6f757f] text-right"
+              className="block text-xl font-bold text-[#6f757f] text-right"
             >
               الموارد المتاحة
             </label>
@@ -293,7 +300,7 @@ Generate a structured business and marketing plan in JSON format:
               placeholder="مثال: 3 موظفين بدوام جزئي ، أدوات تصميم ..."
               value={resources}
               onChange={(e) => setResources(e.target.value)}
-              className="w-full rounded-md border border-[#e2e4e7] text-gray-600 bg-white p-3 min-h-36 max-h-36 text-right h-32"
+              className="w-full rounded-md border border-[#e2e4e7] text-black bg-white p-3 min-h-36 max-h-36 text-right h-32"
             />
           </div>
 
@@ -301,7 +308,7 @@ Generate a structured business and marketing plan in JSON format:
           <div className="space-y-2">
             <label
               htmlFor="valueProposition"
-              className="block text-xl text-[#6f757f] text-right"
+              className="block text-xl font-bold text-[#6f757f] text-right"
             >
               القيمة المقترحة/المشكلة التي يحلها المشروع
             </label>
@@ -309,7 +316,7 @@ Generate a structured business and marketing plan in JSON format:
               id="valueProposition"
               value={valueProposition}
               onChange={(e) => setValueProposition(e.target.value)}
-              className="w-full rounded-md border border-[#e2e4e7] bg-white p-3 text-gray-500 min-h-36 max-h-36 text-right h-32"
+              className="w-full rounded-md border border-[#e2e4e7] bg-white p-3 text-black min-h-36 max-h-36 text-right h-32"
             />
           </div>
 
@@ -317,18 +324,19 @@ Generate a structured business and marketing plan in JSON format:
           <div className="mt-10 flex justify-center">
             <button
               type="submit"
-              className="rounded-full bg-white px-8 py-3 text-lg font-medium text-[#0a2540] shadow-lg transition-all hover:shadow-xl"
+              className="rounded-full font-bold bg-white px-8 py-3 text-lg  text-[#0a2540] shadow-lg transition-all hover:shadow-xl"
             >
               أنشئ خطتي الآن
             </button>
           </div>
 
           {/* AI Message */}
-          <p className="text-center text-sm text-[#8696ab] mt-4">
+          <p className="text-center font-bold text-sm text-[#8696ab] mt-4">
             سيتم تجهيز خطتك خلال لحظات باستخدام الذكاء الاصطناعي
           </p>
         </form>
       </main>
+    </div>
     </div>
   );
 }
