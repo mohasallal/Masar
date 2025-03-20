@@ -4,7 +4,6 @@ import React from "react";
 import Image from "next/image";
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft } from 'lucide-react';
 import Header from "@/components/header";
 
 const TaskDetails = () => {
@@ -16,8 +15,18 @@ const TaskDetails = () => {
     return <p>مهمة غير صالحة.</p>;
   }
 
-  const handleBack = () => {
-    router.back();
+
+  const getPriorityColor = (priority:any) => {
+    switch (priority) {
+      case 'عالية':
+        return 'text-red-500';
+      case 'متوسطة':
+        return 'text-yellow-500';
+      case 'عادية':
+        return 'text-green-500';
+      default:
+        return 'text-gray-500';
+    }
   };
 
   return (
@@ -35,7 +44,7 @@ const TaskDetails = () => {
           <h1 className="text-2xl font-bold text-[#0a2540] mb-4">{task.title}</h1>
           <div className="mb-4">
             <span className="font-semibold">الأولوية: </span>
-            <span className="text-red-500">عالية</span>
+            <span className={getPriorityColor(task.priority || 'عادية')}>{task.priority || 'عادية'}</span>
           </div>
           <div className="mb-4">
             <span className="font-semibold">المسؤول عن إتمام المهمة: </span>
@@ -49,15 +58,15 @@ const TaskDetails = () => {
             <span className="font-semibold">نسبة الإنجاز: </span>
             <div className="h-4 w-full bg-gray-200 rounded-full overflow-hidden">
               <div
-                className="h-full bg-blue-500"
-                style={{ width: `${task.progress || 0}%` }}
+                className="h-full bg-[#0a2540]"
+                style={{ width: `${task.progress || 16}%` }}
               ></div>
             </div>
           </div>
           <div className="mb-4">
             <span className="font-semibold">تفاصيل المهمة: </span>
             <p className="text-gray-700">
-              إعداد عرض تقديمي احترافي لجذب المستثمرين، يتضمن معلومات عن المشروع، السوق المستهدفة، ونموذج العمل. بالإضافة إلى التوقعات المالية والخطط المستقبلية.
+              {task.title}
             </p>
           </div>
         </div>

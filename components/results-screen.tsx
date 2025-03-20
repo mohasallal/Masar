@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import LoadingScreen from "@/components/loading-screen";
 import { useRouter } from 'next/navigation';
+import Header from "./header";
+import { IoIosArrowDropleftCircle } from "react-icons/io";
 
 interface PlanDisplayProps {
   onViewSummary   ?: () => void;
@@ -89,24 +91,7 @@ Generate a structured business and marketing plan in JSON format:
   return (
     <div className="flex flex-col min-h-screen bg-white" dir="rtl">
       {/* Header */}
-      <header className="flex justify-between items-center p-6 border-b border-gray-100">
-        <div className="w-24">
-          <div className="relative h-12 w-12">
-            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 10C12 6.68629 14.6863 4 18 4H22C25.3137 4 28 6.68629 28 10V40C28 43.3137 25.3137 46 22 46H18C14.6863 46 12 43.3137 12 40V10Z" fill="#0a2540" />
-              <path d="M32 10C32 6.68629 34.6863 4 38 4H42C45.3137 4 48 6.68629 48 10V40C48 43.3137 45.3137 46 42 46H38C34.6863 46 32 43.3137 32 40V10Z" fill="#0a2540" />
-              <path d="M2 20C2 16.6863 4.68629 14 8 14H12C15.3137 14 18 16.6863 18 20V30C18 33.3137 15.3137 36 12 36H8C4.68629 36 2 33.3137 2 30V20Z" fill="#0a2540" />
-            </svg>
-          </div>
-        </div>
-        <button className="text-[#0a2540]">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 6H21" stroke="#0a2540" strokeWidth="2" strokeLinecap="round" />
-            <path d="M3 12H21" stroke="#0a2540" strokeWidth="2" strokeLinecap="round" />
-            <path d="M3 18H21" stroke="#0a2540" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-        </button>
-      </header>
+    <Header/>
 
       {/* Main Content */}
       <main className="flex-1 px-4 py-8 max-w-3xl mx-auto w-full">
@@ -121,9 +106,11 @@ Generate a structured business and marketing plan in JSON format:
             <h2 className="text-2xl font-bold mb-6 text-center">خطة العمل</h2>
             <button
               onClick={() => navigateToPlanDetails('business')}
-              className="bg-white text-black px-6 py-3 rounded-full font-bold block mx-auto"
+              className="bg-white text-black px-6 py-3 rounded-2xl text-xl flex font-bold items-center gap-2 mx-auto"
             >
               عرض التفاصيل
+              <IoIosArrowDropleftCircle  className="text-3xl"/>
+              
             </button>
           </div>
         )}
@@ -134,9 +121,11 @@ Generate a structured business and marketing plan in JSON format:
             <h2 className="text-2xl font-bold mb-6 text-center">خطة التسويق</h2>
             <button
               onClick={() => navigateToPlanDetails('marketing')}
-              className="bg-white text-black px-6 py-3 rounded-full font-bold block mx-auto"
+              className="bg-white text-black px-6 py-3 rounded-2xl text-xl flex font-bold items-center gap-2  mx-auto"
             >
               عرض التفاصيل
+              <IoIosArrowDropleftCircle  className="text-3xl"/>
+
             </button>
           </div>
         )}

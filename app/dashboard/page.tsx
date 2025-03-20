@@ -53,19 +53,19 @@ export default function Dashboard() {
         {/* Tabs */}
         <div className="mb-8 flex items-center gap-10 justify-center space-x-6 space-x-reverse">
           <button
-            className={`pb-2 text-lg font-medium ${activeTab === "new" ? "border-b-2 border-[#6fc4fc] text-[#0a2540]" : "text-[#6d798e]"}`}
+            className={`pb-2 text-lg font-medium ${activeTab === "new" ? "border-b-2 border-[#0a2540] text-[#0a2540]" : "text-[#6d798e]"}`}
             onClick={() => setActiveTab("new")}
           >
             المهام الجديدة
           </button>
           <button
-            className={`pb-2 text-lg font-medium ${activeTab === "inProgress" ? "border-b-2 border-[#6fc4fc] text-[#0a2540]" : "text-[#6d798e]"}`}
+            className={`pb-2 text-lg font-medium ${activeTab === "inProgress" ? "border-b-2 border-[#0a2540] text-[#0a2540]" : "text-[#6d798e]"}`}
             onClick={() => setActiveTab("inProgress")}
           >
             قيد التنفيذ
           </button>
           <button
-            className={`pb-2 text-lg font-medium ${activeTab === "archive" ? "border-b-2 border-[#6fc4fc] text-[#0a2540]" : "text-[#6d798e]"}`}
+            className={`pb-2 text-lg font-medium ${activeTab === "archive" ? "border-b-2 border-[#0a2540] text-[#0a2540]" : "text-[#6d798e]"}`}
             onClick={() => setActiveTab("archive")}
           >
             أرشيف
@@ -77,7 +77,7 @@ export default function Dashboard() {
           <h1 className="text-3xl font-bold text-[#0a2540]">
             {activeTab === "new" ? "لوحة كانبان الخاصة بك" : activeTab === "inProgress" ? "قيد التنفيذ" : "الأرشيف"}
           </h1>
-          {activeTab === "new" && <p className="text-[#6d798e] text-xl">المهام الجديدة</p>}
+          {activeTab === "new" && <p className="text-[#030a16] text-xl font-bold">المهام الجديدة</p>}
         </div>
 
         {/* Tasks */}
@@ -87,7 +87,7 @@ export default function Dashboard() {
             .map((task) => (
               <div
                 key={task.id}
-                className="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm cursor-pointer"
+                className="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-xl cursor-pointer" // إضافة shadow-md
                 onClick={() => navigateToTaskDetails(task)}
               >
                 <div className="p-4">
@@ -121,10 +121,10 @@ export default function Dashboard() {
                   {task.status === "new" && (
                     <button
                       onClick={(e) => {
-                        e.stopPropagation(); // منع انتقال الحدث إلى العنصر الأب
+                        e.stopPropagation();
                         updateTaskStatus(task.id, "inProgress");
                       }}
-                      className="bg-[#6fc4fc] text-white px-4 py-2 rounded-full text-sm"
+                      className="bg-[#0a2540] text-white px-4 py-2 rounded-full text-sm"
                     >
                       قيد التنفيذ
                     </button>
@@ -132,7 +132,7 @@ export default function Dashboard() {
                   {task.status === "inProgress" && (
                     <button
                       onClick={(e) => {
-                        e.stopPropagation(); // منع انتقال الحدث إلى العنصر الأب
+                        e.stopPropagation();
                         updateTaskStatus(task.id, "archive");
                       }}
                       className="bg-gray-400 text-white px-4 py-2 rounded-full text-sm"
@@ -143,7 +143,7 @@ export default function Dashboard() {
                   {task.status === "inProgress" && (
                     <button
                       onClick={(e) => {
-                        e.stopPropagation(); // منع انتقال الحدث إلى العنصر الأب
+                        e.stopPropagation();
                         updateTaskStatus(task.id, "new");
                       }}
                       className="bg-green-500 text-white px-4 py-2 rounded-full text-sm"
@@ -152,7 +152,6 @@ export default function Dashboard() {
                     </button>
                   )}
                 </div>
-                <div className="h-2 bg-[#6ea5ca]"></div>
               </div>
             ))}
         </div>
