@@ -1,31 +1,29 @@
 "use client";
-
-import React from "react";
+import React, { Suspense } from "react";
 import Image from "next/image";
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Header from "@/components/header";
 
 const TaskDetails = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const task = JSON.parse(decodeURIComponent(searchParams.get('task') || '{}'));
+  const task = JSON.parse(decodeURIComponent(searchParams.get("task") || "{}"));
 
   if (!task) {
     return <p>مهمة غير صالحة.</p>;
   }
 
-
-  const getPriorityColor = (priority:any) => {
+  const getPriorityColor = (priority: any) => {
     switch (priority) {
-      case 'عالية':
-        return 'text-red-500';
-      case 'متوسطة':
-        return 'text-yellow-500';
-      case 'عادية':
-        return 'text-green-500';
+      case "عالية":
+        return "text-red-500";
+      case "متوسطة":
+        return "text-yellow-500";
+      case "عادية":
+        return "text-green-500";
       default:
-        return 'text-gray-500';
+        return "text-gray-500";
     }
   };
 
@@ -41,14 +39,20 @@ const TaskDetails = () => {
             height={200}
             className="h-auto w-full rounded-lg object-cover mb-4"
           />
-          <h1 className="text-2xl font-bold text-[#0a2540] mb-4">{task.title}</h1>
+          <h1 className="text-2xl font-bold text-[#0a2540] mb-4">
+            {task.title}
+          </h1>
           <div className="mb-4">
             <span className="font-semibold">الأولوية: </span>
-            <span className={getPriorityColor(task.priority || 'عادية')}>{task.priority || 'عادية'}</span>
+            <span className={getPriorityColor(task.priority || "عادية")}>
+              {task.priority || "عادية"}
+            </span>
           </div>
           <div className="mb-4">
             <span className="font-semibold">المسؤول عن إتمام المهمة: </span>
-            <span>{task.image === "/sarah.png" ? "سارة بامبر" : "غير محدد"}</span>
+            <span>
+              {task.image === "/sarah.png" ? "سارة بامبر" : "غير محدد"}
+            </span>
           </div>
           <div className="mb-4">
             <span className="font-semibold">تاريخ التسليم المتوقع: </span>
@@ -65,9 +69,7 @@ const TaskDetails = () => {
           </div>
           <div className="mb-4">
             <span className="font-semibold">تفاصيل المهمة: </span>
-            <p className="text-gray-700">
-              {task.title}
-            </p>
+            <p className="text-gray-700">{task.title}</p>
           </div>
         </div>
       </main>
@@ -75,4 +77,14 @@ const TaskDetails = () => {
   );
 };
 
-export default TaskDetails;
+const TaskDetailsPage = () => (
+  <Suspense
+    fallback={
+      <div className="min-h-screen bg-white text-black">Loading...</div>
+    }
+  >
+    <TaskDetails />
+  </Suspense>
+);
+
+export default TaskDetailsPage;
